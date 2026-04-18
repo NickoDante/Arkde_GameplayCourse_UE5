@@ -35,6 +35,6 @@ private:
 	
 	void Move(const FInputActionValue& Value);
 	
-	void Look();
+	void Look(const FInputActionValue& Value);
 	
 };

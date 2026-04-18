@@ -49,7 +49,11 @@ void AGAM_PlayerController::Move(const FInputActionValue& Value)
 	GetPawn()->AddMovementInput(RightDirection, MovementVector.X);
 }
 
-void AGAM_PlayerController::Look()
+void AGAM_PlayerController::Look(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("AGAM_PlayerController::Look()"));
+	const FVector2D LookVector = Value.Get<FVector2D>().GetSafeNormal();
+	const float LookMultiplier = 1.0;
+	
+	AddYawInput(LookVector.X * LookMultiplier);
+	AddPitchInput(LookVector.Y * LookMultiplier);
 }
