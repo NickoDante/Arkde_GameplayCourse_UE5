@@ -8,6 +8,7 @@
 
 class UInputMappingContext;
 class UInputAction;
+struct FInputActionValue;
 
 /**
  * 
@@ -32,7 +33,7 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs|Movement")
 	TObjectPtr<UInputAction> LookAction;
 	
-	void Move();
+	void Move(const FInputActionValue& Value);
 	
 	void Look();
 	

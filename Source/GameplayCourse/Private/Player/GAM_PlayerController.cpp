@@ -32,9 +32,21 @@ void AGAM_PlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(LookAction, ETriggerEvent::Triggered, this, &ThisClass::Look);
 }
 
-void AGAM_PlayerController::Move()
+void AGAM_PlayerController::Move(const FInputActionValue& Value)
 {
-	UE_LOG(LogTemp, Warning, TEXT("AGAM_PlayerController::Move()"));
+	if (!IsValid(GetPawn()))
+	{
+		return;
+	}
+	
+	const FVector2D MovementVector = Value.Get<FVector2D>().GetSafeNormal();
+	
+	const FRotator YawRotation(0.0f, GetControlRotation().Yaw, 0.0f);
+	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	
+	GetPawn()->AddMovementInput(ForwardDirection, MovementVector.Y);
+	GetPawn()->AddMovementInput(RightDirection, MovementVector.X);
 }
 
 void AGAM_PlayerController::Look()
