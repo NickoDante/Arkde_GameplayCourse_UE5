@@ -9,7 +9,7 @@
 class UInputMappingContext;
 class UInputAction;
 struct FInputActionValue;
-
+class AGAM_PlayerCharacter;
 /**
  * 
  */
@@ -22,6 +22,11 @@ protected:
 	
 	virtual void SetupInputComponent() override;
 	
+	virtual void OnPossess(APawn* aPawn) override;
+	
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<AGAM_PlayerCharacter> PlayerCharacter;
+	
 private:
 	
 	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs")
@@ -33,8 +38,14 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs|Movement")
 	TObjectPtr<UInputAction> LookAction;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs|Aim")
+	TObjectPtr<UInputAction> AimAction;
+	
 	void Move(const FInputActionValue& Value);
 	
 	void Look(const FInputActionValue& Value);
 	
+	void StartAim();
+	
+	void StopAim();
 };

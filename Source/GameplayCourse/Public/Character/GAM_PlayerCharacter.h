@@ -17,6 +17,13 @@ class GAMEPLAYCOURSE_API AGAM_PlayerCharacter : public ACharacter
 public:
 	
 	AGAM_PlayerCharacter();
+	
+	void StartAim();
+	
+	void StopAim();
+	
+	bool IsAiming() const { return bIsAiming; }
+	
 protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -24,4 +31,13 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCameraComponent> FollowCamera;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Arkde|Aim")
+	uint8 bIsAiming : 1;
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_StartAim();
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_StopAim();
 };

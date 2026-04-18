@@ -42,3 +42,15 @@ AGAM_PlayerCharacter::AGAM_PlayerCharacter()
 	FollowCamera->bUsePawnControlRotation = false;
 }
 
+void AGAM_PlayerCharacter::StartAim()
+{
+	bIsAiming = true;
+	BP_StartAim();
+}
+
+void AGAM_PlayerCharacter::StopAim()
+{
+	bIsAiming = false;
+	BP_StopAim();
+}
+
