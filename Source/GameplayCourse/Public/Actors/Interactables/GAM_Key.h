@@ -15,7 +15,7 @@ public:
 
 	AGAM_Key();
 	
-	virtual void Interact_Implementation(class APawn* InstigatorPawn) override;
+	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 	
 protected:
 	

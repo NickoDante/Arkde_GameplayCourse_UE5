@@ -28,6 +28,10 @@ public:
 	
 	void SetCurrentInteractable(AActor* NewInteractable) { CurrentInteractable = NewInteractable; }
 	
+	void AddKey(const FName& NewID) { OwningKeyIDs.Add(NewID); }
+	void RemoveKey(const FName& ID) { OwningKeyIDs.Remove(ID); }
+	bool HasKey(const FName& ID) { return OwningKeyIDs.Contains(ID); }
+	
 protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -41,6 +45,8 @@ protected:
 	
 	UPROPERTY()
 	TObjectPtr<AActor> CurrentInteractable;
+	
+	TArray<FName> OwningKeyIDs;
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_StartAim();
