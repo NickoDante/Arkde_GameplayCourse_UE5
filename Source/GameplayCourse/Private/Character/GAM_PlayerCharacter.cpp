@@ -6,6 +6,7 @@
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
+#include "Interfaces/GAM_Interactable.h"
 
 // Sets default values
 AGAM_PlayerCharacter::AGAM_PlayerCharacter()
@@ -56,18 +57,9 @@ void AGAM_PlayerCharacter::StopAim()
 
 void AGAM_PlayerCharacter::StartInteract()
 {
-	if (GEngine)
+	if (IsValid(CurrentInteractable) && CurrentInteractable->GetClass()->ImplementsInterface(UGAM_Interactable::StaticClass()))
 	{
-		const FString Message = IsValid(CurrentInteractable) ?
-		"AGAM_PlayerCharacter::StartInteract --> CurrentInteractable is Valid !" :
-		"AGAM_PlayerCharacter::StartInteract --> CurrentInteractable is NOT Valid !";
-		
-		GEngine->AddOnScreenDebugMessage(
-			-1, 
-			5.0f, 
-			FColor::Cyan, 
-			Message
-			);
+		IGAM_Interactable::Execute_Interact(CurrentInteractable, this);
 	}
 }
 

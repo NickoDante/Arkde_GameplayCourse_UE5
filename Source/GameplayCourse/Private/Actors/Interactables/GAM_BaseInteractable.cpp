@@ -14,6 +14,17 @@ AGAM_BaseInteractable::AGAM_BaseInteractable()
 	InteractCollision->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
 }
 
+void AGAM_BaseInteractable::Interact_Implementation(APawn* InstigatorPawn)
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(-1, 
+			5.0f, 
+			FColor::Cyan, 
+			FString::Printf(TEXT("You are interacting with '%s'"), *GetName()));
+	}
+}
+
 void AGAM_BaseInteractable::BeginPlay()
 {
 	Super::BeginPlay();

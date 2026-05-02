@@ -4,18 +4,21 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "Interfaces/GAM_Interactable.h"
 #include "GAM_BaseInteractable.generated.h"
 
 class USphereComponent;
 
 UCLASS()
-class GAMEPLAYCOURSE_API AGAM_BaseInteractable : public AActor
+class GAMEPLAYCOURSE_API AGAM_BaseInteractable : public AActor, public IGAM_Interactable
 {
 	GENERATED_BODY()
 
 public:
 	
 	AGAM_BaseInteractable();
+	
+	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 
 protected:
 	
