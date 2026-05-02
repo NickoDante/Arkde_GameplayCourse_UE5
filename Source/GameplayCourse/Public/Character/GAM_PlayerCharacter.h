@@ -22,6 +22,8 @@ public:
 	
 	void StopAim();
 	
+	void StartInteract();
+	
 	bool IsAiming() const { return bIsAiming; }
 	
 protected:

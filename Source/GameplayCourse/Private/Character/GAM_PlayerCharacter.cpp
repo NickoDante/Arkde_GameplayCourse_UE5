@@ -54,3 +54,16 @@ void AGAM_PlayerCharacter::StopAim()
 	BP_StopAim();
 }
 
+void AGAM_PlayerCharacter::StartInteract()
+{
+	if (GEngine)
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1, 
+			5.0f, 
+			FColor::Cyan, 
+			TEXT("AGAM_PlayerCharacter::StartInteract --> Player wants to interact")
+			);
+	}
+}
+

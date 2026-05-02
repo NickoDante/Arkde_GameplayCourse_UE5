@@ -41,6 +41,9 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs|Aim")
 	TObjectPtr<UInputAction> AimAction;
 	
+	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs|Interact")
+	TObjectPtr<UInputAction> InteractAction;
+	
 	void Move(const FInputActionValue& Value);
 	
 	void Look(const FInputActionValue& Value);
@@ -48,4 +51,6 @@ private:
 	void StartAim();
 	
 	void StopAim();
+	
+	void StartInteract();
 };
