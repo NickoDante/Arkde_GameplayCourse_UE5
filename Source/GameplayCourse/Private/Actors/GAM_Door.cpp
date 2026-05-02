@@ -1,6 +1,9 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "GameplayCourse/Public/Actors/GAM_Door.h"
+
+#include "Character/GAM_PlayerCharacter.h"
+#include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
 
 AGAM_Door::AGAM_Door()
@@ -8,19 +11,46 @@ AGAM_Door::AGAM_Door()
 	PrimaryActorTick.bCanEverTick = true;
 	
 	DoorFrame = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("DoorFrame"));
-	RootComponent = DoorFrame;
+	SetRootComponent(DoorFrame);
 	
 	Door = CreateDefaultSubobject<UStaticMeshComponent>(TEXT("Door"));
 	Door->SetupAttachment(DoorFrame);
 	
+	if (IsValid(InteractCollision))
+	{
+		InteractCollision->SetupAttachment(DoorFrame);
+	}
+	
 	bHasOpenImmediately = false;
 	bIsOpening = false;
+	bIsFullyOpened = false;
 }
 
-// Called when the game starts or when spawned
-void AGAM_Door::BeginPlay()
+void AGAM_Door::Interact_Implementation(APawn* InstigatorPawn)
 {
-	Super::BeginPlay();
+	if (!Execute_CanInteract(this))
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			5.0f,
+			FColor::Orange,
+			TEXT("Door can't be opened!")
+			);
+		return;
+	}
+	
+	AGAM_PlayerCharacter* PlayerCharacter = Cast<AGAM_PlayerCharacter>(InstigatorPawn);
+	const bool bCanOpen = IsValid(PlayerCharacter) && PlayerCharacter->HasKey(ID);
+	if (!bCanOpen)
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1,
+			5.0f,
+			FColor::Red,
+			TEXT("You don't have the key !")
+			);
+		return;
+	}
 	
 	if (bHasOpenImmediately)
 	{
@@ -32,6 +62,11 @@ void AGAM_Door::BeginPlay()
 	{
 		StartOpen();
 	}
+}
+
+bool AGAM_Door::CanInteract_Implementation()
+{
+	return !bIsOpening && !bIsFullyOpened;
 }
 
 // Called every frame
@@ -58,6 +93,8 @@ void AGAM_Door::OpenImmediately()
 	{
 		Door->SetRelativeRotation(FRotator(0.0f, -90.0f, 0.0f));
 	}
+	
+	bIsFullyOpened = true;
 }
 
 void AGAM_Door::StartOpen()
@@ -68,5 +105,6 @@ void AGAM_Door::StartOpen()
 void AGAM_Door::StopOpen()
 {
 	bIsOpening = false;
+	bIsFullyOpened = true;
 }
 

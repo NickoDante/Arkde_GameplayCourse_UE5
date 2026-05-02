@@ -3,13 +3,13 @@
 #pragma once
 
 #include "CoreMinimal.h"
-#include "GameFramework/Actor.h"
+#include "Interactables/GAM_BaseInteractable.h"
 #include "GAM_Door.generated.h"
 
 class UStaticMeshComponent;
 
 UCLASS()
-class GAMEPLAYCOURSE_API AGAM_Door : public AActor
+class GAMEPLAYCOURSE_API AGAM_Door : public AGAM_BaseInteractable
 {
 	GENERATED_BODY()
 
@@ -18,8 +18,10 @@ public:
 	AGAM_Door();
 
 protected:
-	// Called when the game starts or when spawned
-	virtual void BeginPlay() override;
+	
+	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
+	
+	virtual bool CanInteract_Implementation() override;
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> DoorFrame;
@@ -32,6 +34,11 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Door")
 	uint8 bIsOpening : 1;
+	
+	uint8 bIsFullyOpened : 1;
+	
+	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Arkde|Door")
+	FName ID;
 
 public:
 	// Called every frame
