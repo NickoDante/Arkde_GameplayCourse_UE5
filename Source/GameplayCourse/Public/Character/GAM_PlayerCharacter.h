@@ -26,6 +26,8 @@ public:
 	
 	bool IsAiming() const { return bIsAiming; }
 	
+	void SetCurrentInteractable(AActor* NewInteractable) { CurrentInteractable = NewInteractable; }
+	
 protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -36,6 +38,9 @@ protected:
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Arkde|Aim")
 	uint8 bIsAiming : 1;
+	
+	UPROPERTY()
+	TObjectPtr<AActor> CurrentInteractable;
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_StartAim();

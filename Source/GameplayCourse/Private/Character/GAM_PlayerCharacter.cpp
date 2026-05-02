@@ -58,11 +58,15 @@ void AGAM_PlayerCharacter::StartInteract()
 {
 	if (GEngine)
 	{
+		const FString Message = IsValid(CurrentInteractable) ?
+		"AGAM_PlayerCharacter::StartInteract --> CurrentInteractable is Valid !" :
+		"AGAM_PlayerCharacter::StartInteract --> CurrentInteractable is NOT Valid !";
+		
 		GEngine->AddOnScreenDebugMessage(
 			-1, 
 			5.0f, 
 			FColor::Cyan, 
-			TEXT("AGAM_PlayerCharacter::StartInteract --> Player wants to interact")
+			Message
 			);
 	}
 }
