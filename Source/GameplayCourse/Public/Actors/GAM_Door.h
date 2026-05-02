@@ -39,6 +39,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Arkde|Door")
 	FName ID;
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_PlayDoorSound(const bool bCanOpen);
 
 public:
 	// Called every frame

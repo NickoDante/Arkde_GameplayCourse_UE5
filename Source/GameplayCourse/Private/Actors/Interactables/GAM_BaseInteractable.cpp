@@ -39,11 +39,6 @@ void AGAM_BaseInteractable::BeginPlay()
 void AGAM_BaseInteractable::OnOverlapStarted(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult& SweepResult)
 {
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Yellow, TEXT("AGAM_BaseInteractable::OnOverlapStarted: Overlap Started!"));
-	}
-	
 	AGAM_PlayerCharacter* PlayerCharacter = Cast<AGAM_PlayerCharacter>(OtherActor);
 	if (IsValid(PlayerCharacter))
 	{
@@ -54,11 +49,6 @@ void AGAM_BaseInteractable::OnOverlapStarted(UPrimitiveComponent* OverlappedComp
 void AGAM_BaseInteractable::OnOverlapEnded(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
 	UPrimitiveComponent* OtherComp, int32 OtherBodyIndex)
 {
-	if (GEngine)
-	{
-		GEngine->AddOnScreenDebugMessage(-1, 5.0f, FColor::Orange, TEXT("AGAM_BaseInteractable::OnOverlapEnded: Overlap Ended!"));
-	}
-	
 	AGAM_PlayerCharacter* PlayerCharacter = Cast<AGAM_PlayerCharacter>(OtherActor);
 	if (IsValid(PlayerCharacter))
 	{

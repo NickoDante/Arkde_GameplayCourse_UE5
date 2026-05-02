@@ -30,25 +30,15 @@ void AGAM_Door::Interact_Implementation(APawn* InstigatorPawn)
 {
 	if (!Execute_CanInteract(this))
 	{
-		GEngine->AddOnScreenDebugMessage(
-			-1,
-			5.0f,
-			FColor::Orange,
-			TEXT("Door can't be opened!")
-			);
 		return;
 	}
 	
 	AGAM_PlayerCharacter* PlayerCharacter = Cast<AGAM_PlayerCharacter>(InstigatorPawn);
 	const bool bCanOpen = IsValid(PlayerCharacter) && PlayerCharacter->HasKey(ID);
+	BP_PlayDoorSound(bCanOpen);
+	
 	if (!bCanOpen)
 	{
-		GEngine->AddOnScreenDebugMessage(
-			-1,
-			5.0f,
-			FColor::Red,
-			TEXT("You don't have the key !")
-			);
 		return;
 	}
 	
