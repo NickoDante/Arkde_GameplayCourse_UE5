@@ -14,4 +14,7 @@ class GAMEPLAYCOURSE_API AGAM_Rifle : public AGAM_Weapon
 public:
 
 	AGAM_Rifle();
+	
+	virtual void StartAction() override;
+	virtual void StopAction() override;
 };

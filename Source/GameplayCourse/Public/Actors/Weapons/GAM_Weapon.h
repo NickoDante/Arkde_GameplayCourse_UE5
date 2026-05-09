@@ -21,8 +21,8 @@ public:
 	
 	virtual void Interact_Implementation(APawn* InstigatorPawn) override;
 	
-	void StartAction();
-	void StopAction();
+	virtual void StartAction();
+	virtual void StopAction();
 	
 protected:
 
@@ -34,6 +34,9 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
 	FName AttachSocketName;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
+	float TraceLength;
 	
 	UPROPERTY()
 	TObjectPtr<AGAM_PlayerCharacter> PlayerCharacterOwner;
