@@ -3,6 +3,7 @@
 
 #include "Character/GAM_PlayerCharacter.h"
 
+#include "Actors/Weapons/GAM_Weapon.h"
 #include "Camera/CameraComponent.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -60,6 +61,22 @@ void AGAM_PlayerCharacter::StartInteract()
 	if (IsValid(CurrentInteractable) && CurrentInteractable->GetClass()->ImplementsInterface(UGAM_Interactable::StaticClass()))
 	{
 		IGAM_Interactable::Execute_Interact(CurrentInteractable, this);
+	}
+}
+
+void AGAM_PlayerCharacter::StartWeaponAction()
+{
+	if (IsValid(CurrentWeapon))
+	{
+		CurrentWeapon->StartAction();
+	}
+}
+
+void AGAM_PlayerCharacter::StopWeaponAction()
+{
+	if (IsValid(CurrentWeapon))
+	{
+		CurrentWeapon->StopAction();
 	}
 }
 

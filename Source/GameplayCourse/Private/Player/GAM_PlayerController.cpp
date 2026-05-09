@@ -36,6 +36,9 @@ void AGAM_PlayerController::SetupInputComponent()
 	EnhancedInputComponent->BindAction(AimAction, ETriggerEvent::Completed, this, &ThisClass::StopAim);
 	
 	EnhancedInputComponent->BindAction(InteractAction, ETriggerEvent::Started, this, &ThisClass::StartInteract);
+	
+	EnhancedInputComponent->BindAction(WeaponAction, ETriggerEvent::Started, this, &ThisClass::StartWeaponAction);
+	EnhancedInputComponent->BindAction(WeaponAction, ETriggerEvent::Completed, this, &ThisClass::StopWeaponAction);
 }
 
 void AGAM_PlayerController::OnPossess(APawn* aPawn)
@@ -100,4 +103,24 @@ void AGAM_PlayerController::StartInteract()
 	}
 	
 	PlayerCharacter->StartInteract();
+}
+
+void AGAM_PlayerController::StartWeaponAction()
+{
+	if (!IsValid(PlayerCharacter))
+	{
+		return;
+	}
+	
+	PlayerCharacter->StartWeaponAction();
+}
+
+void AGAM_PlayerController::StopWeaponAction()
+{
+	if (!IsValid(PlayerCharacter))
+	{
+		return;
+	}
+	
+	PlayerCharacter->StopWeaponAction();
 }

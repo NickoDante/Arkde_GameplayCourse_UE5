@@ -3,6 +3,7 @@
 
 #include "Actors/Weapons/GAM_Weapon.h"
 
+#include "Character/GAM_PlayerCharacter.h"
 #include "Components/SphereComponent.h"
 #include "GameFramework/Character.h"
 
@@ -31,6 +32,30 @@ void AGAM_Weapon::Interact_Implementation(APawn* InstigatorPawn)
 	}
 }
 
+void AGAM_Weapon::StartAction()
+{
+	if (bDebug)
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1, 
+			5.0f, 
+			FColor::Green,
+			FString::Printf(TEXT("Starting Weapon: %s"), *GetName()));
+	}
+}
+
+void AGAM_Weapon::StopAction()
+{
+	if (bDebug)
+	{
+		GEngine->AddOnScreenDebugMessage(
+			-1, 
+			5.0f, 
+			FColor::Orange,
+			FString::Printf(TEXT("Stopping Weapon: %s"), *GetName()));
+	}
+}
+
 void AGAM_Weapon::PickUp(ACharacter* Character)
 {
 	if (!IsValid(Character))
@@ -54,6 +79,12 @@ void AGAM_Weapon::PickUp(ACharacter* Character)
 	}
 	
 	// Set weapons owner
+	PlayerCharacterOwner = Cast<AGAM_PlayerCharacter>(Character);
+	if (IsValid(PlayerCharacterOwner))
+	{
+		PlayerCharacterOwner->SetCurrentWeapon(this);
+	}
+	
 	SetOwner(Character);
 	
 	BP_PickUp(Character);

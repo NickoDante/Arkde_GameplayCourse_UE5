@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "GAM_PlayerCharacter.generated.h"
 
+class AGAM_Weapon;
 class USpringArmComponent;
 class UCameraComponent;
 
@@ -32,6 +33,10 @@ public:
 	void RemoveKey(const FName& ID) { OwningKeyIDs.Remove(ID); }
 	bool HasKey(const FName& ID) { return OwningKeyIDs.Contains(ID); }
 	
+	void StartWeaponAction();
+	void StopWeaponAction();
+	void SetCurrentWeapon(AGAM_Weapon* NewWeapon) { CurrentWeapon = NewWeapon; }
+	
 protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -47,6 +52,9 @@ protected:
 	TObjectPtr<AActor> CurrentInteractable;
 	
 	TArray<FName> OwningKeyIDs;
+	
+	UPROPERTY(BlueprintReadOnly, Category = "Arkde|Weapon")
+	TObjectPtr<AGAM_Weapon> CurrentWeapon;
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_StartAim();

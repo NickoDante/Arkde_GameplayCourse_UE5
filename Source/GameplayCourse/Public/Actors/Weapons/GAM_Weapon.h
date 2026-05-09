@@ -8,6 +8,7 @@
 
 class UStaticMeshComponent;
 class ACharacter;
+class AGAM_PlayerCharacter;
 
 UCLASS()
 class GAMEPLAYCOURSE_API AGAM_Weapon : public AGAM_BaseInteractable
@@ -33,6 +34,9 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
 	FName AttachSocketName;
+	
+	UPROPERTY()
+	TObjectPtr<AGAM_PlayerCharacter> PlayerCharacterOwner;
 	
 	void PickUp(ACharacter* Character);
 	
