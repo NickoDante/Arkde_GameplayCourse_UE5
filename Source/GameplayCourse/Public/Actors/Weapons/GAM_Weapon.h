@@ -9,6 +9,7 @@
 class UStaticMeshComponent;
 class ACharacter;
 class AGAM_PlayerCharacter;
+class UDamageType;
 
 UCLASS()
 class GAMEPLAYCOURSE_API AGAM_Weapon : public AGAM_BaseInteractable
@@ -42,6 +43,12 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
 	FName MuzzleSocketName;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
+	float Damage;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
+	TSubclassOf<UDamageType> DamageType;
 	
 	UPROPERTY()
 	TObjectPtr<AGAM_PlayerCharacter> PlayerCharacterOwner;

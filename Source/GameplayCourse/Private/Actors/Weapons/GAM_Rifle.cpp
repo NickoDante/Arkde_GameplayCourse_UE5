@@ -4,6 +4,7 @@
 #include "Actors/Weapons/GAM_Rifle.h"
 
 #include "Character/GAM_PlayerCharacter.h"
+#include "Kismet/GameplayStatics.h"
 
 AGAM_Rifle::AGAM_Rifle()
 {
@@ -54,7 +55,11 @@ void AGAM_Rifle::StartAction()
 	if (bHit)
 	{
 		ShotEnd = HitResult.ImpactPoint;
-		// TODO: Apply Damage
+		AActor* HitActor = HitResult.GetActor();
+		if (IsValid(HitActor))
+		{
+			UGameplayStatics::ApplyPointDamage(HitActor, Damage, ShotDirection, HitResult, PlayerCharacterOwner->GetInstigatorController(), this, DamageType);
+		}
 	}
 	
 	if (bDebug)
