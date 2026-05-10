@@ -17,6 +17,8 @@ public:
 
 	AGAM_PistolProjectile();
 	
+	virtual void NotifyActorBeginOverlap(AActor* OtherActor) override;
+	
 protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")

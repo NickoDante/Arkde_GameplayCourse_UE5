@@ -27,6 +27,9 @@ public:
 	
 	FName GetMuzzleSocketName() const { return MuzzleSocketName; }
 	
+	float GetDamage() const { return Damage; }
+	TSubclassOf<UDamageType> GetDamageType() const { return DamageType; }
+	
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")

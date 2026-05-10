@@ -71,6 +71,10 @@ void AGAM_Pistol::StartAction()
 	ProjectileTransform.SetRotation(FiringRotation.Quaternion());
 	
 	ProjectileActor = GetWorld()->SpawnActor<AGAM_PistolProjectile>(ProjectileActorClass, ProjectileTransform);
+	if (IsValid(ProjectileActor))
+	{
+		ProjectileActor->SetOwner(this);
+	}
 }
 
 
