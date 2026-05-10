@@ -19,6 +19,8 @@ public:
 	
 	AGAM_PlayerCharacter();
 	
+	virtual void GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const override;
+	
 	void StartAim();
 	
 	void StopAim();
@@ -36,6 +38,7 @@ public:
 	void StartWeaponAction();
 	void StopWeaponAction();
 	void SetCurrentWeapon(AGAM_Weapon* NewWeapon) { CurrentWeapon = NewWeapon; }
+	FTransform GetSocketTransform(const FName& SocketName) const;
 	
 protected:
 	

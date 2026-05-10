@@ -16,5 +16,4 @@ public:
 	AGAM_Rifle();
 	
 	virtual void StartAction() override;
-	virtual void StopAction() override;
 };

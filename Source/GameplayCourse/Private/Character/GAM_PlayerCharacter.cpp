@@ -44,6 +44,30 @@ AGAM_PlayerCharacter::AGAM_PlayerCharacter()
 	FollowCamera->bUsePawnControlRotation = false;
 }
 
+void AGAM_PlayerCharacter::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const
+{
+	if (bIsAiming)
+	{
+		OutLocation = FollowCamera->GetComponentLocation();
+		OutRotation = FollowCamera->GetComponentRotation();
+	}
+	else
+	{
+		if (CurrentWeapon)
+		{
+			const FName SocketName = CurrentWeapon->GetMuzzleSocketName();
+			FTransform SocketTransform = GetSocketTransform(SocketName);
+			
+			OutLocation = SocketTransform.GetLocation();
+			OutRotation = GetActorRotation();
+		}
+		else
+		{
+			Super::GetActorEyesViewPoint(OutLocation, OutRotation);
+		}
+	}
+}
+
 void AGAM_PlayerCharacter::StartAim()
 {
 	bIsAiming = true;
@@ -78,5 +102,10 @@ void AGAM_PlayerCharacter::StopWeaponAction()
 	{
 		CurrentWeapon->StopAction();
 	}
+}
+
+FTransform AGAM_PlayerCharacter::GetSocketTransform(const FName& SocketName) const
+{
+	return GetMesh()->GetSocketTransform(SocketName);
 }
 

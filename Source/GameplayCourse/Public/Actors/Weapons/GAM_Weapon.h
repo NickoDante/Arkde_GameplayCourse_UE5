@@ -24,6 +24,8 @@ public:
 	virtual void StartAction();
 	virtual void StopAction();
 	
+	FName GetMuzzleSocketName() const { return MuzzleSocketName; }
+	
 protected:
 
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -37,6 +39,9 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
 	float TraceLength;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
+	FName MuzzleSocketName;
 	
 	UPROPERTY()
 	TObjectPtr<AGAM_PlayerCharacter> PlayerCharacterOwner;

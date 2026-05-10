@@ -37,6 +37,11 @@ void AGAM_Rifle::StartAction()
 	QueryParams.AddIgnoredActor(PlayerCharacterOwner);
 	QueryParams.bTraceComplex = true;
 	
+	// 5. Make the LineTrace
+	const FTransform MuzzleTransform = PlayerCharacterOwner->GetSocketTransform(MuzzleSocketName);
+	FVector ShotStart = MuzzleTransform.GetLocation();
+	FVector ShotEnd = EndLocation;
+	
 	FHitResult HitResult;
 	const bool bHit = GetWorld()->LineTraceSingleByChannel(
 		HitResult,
@@ -48,16 +53,16 @@ void AGAM_Rifle::StartAction()
 	
 	if (bHit)
 	{
+		ShotEnd = HitResult.ImpactPoint;
 		// TODO: Apply Damage
 	}
 	
 	if (bDebug)
 	{
+		// Debug from camera to point view
 		DrawDebugLine(GetWorld(), StartLocation, EndLocation, FColor::Yellow, false, 2.0f, 0, 0.5f);
+		
+		// Debug from Weapon to point view
+		DrawDebugLine(GetWorld(), ShotStart, ShotEnd , FColor::White, false, 2.0f, 0, 0.5f);
 	}
-}
-
-void AGAM_Rifle::StopAction()
-{
-	Super::StopAction();
 }
