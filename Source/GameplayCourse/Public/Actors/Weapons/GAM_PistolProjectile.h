@@ -6,6 +6,8 @@
 #include "GameFramework/Actor.h"
 #include "GAM_PistolProjectile.generated.h"
 
+class UProjectileMovementComponent;
+
 UCLASS()
 class GAMEPLAYCOURSE_API AGAM_PistolProjectile : public AActor
 {
@@ -19,4 +21,7 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> ProjectileMesh;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UProjectileMovementComponent> ProjectileMovementComponent;
 };
