@@ -4,6 +4,7 @@
 #include "Actors/Weapons/GAM_PistolProjectile.h"
 
 #include "Actors/Weapons/GAM_Weapon.h"
+#include "DataAssets/GAM_WeaponData.h"
 #include "GameFramework/ProjectileMovementComponent.h"
 #include "Kismet/GameplayStatics.h"
 
@@ -29,13 +30,16 @@ void AGAM_PistolProjectile::NotifyActorBeginOverlap(AActor* OtherActor)
 		AActor* CharacterOwner = WeaponOwner->GetOwner();
 		if (IsValid(CharacterOwner))
 		{
-			const float Damage = WeaponOwner->GetDamage();
+			UGAM_WeaponData* WeaponData = WeaponOwner->GetWeaponData();
+			const float Damage = IsValid(WeaponData)? WeaponData->GetDamage() : 1.0f;
 			const FVector HitDirection = GetActorForwardVector();
 		
 			FHitResult HitResult;
 			HitResult.ImpactPoint = GetActorLocation();
 		
-			UGameplayStatics::ApplyPointDamage(OtherActor, Damage, HitDirection, HitResult, CharacterOwner->GetInstigatorController(), WeaponOwner, WeaponOwner->GetDamageType());
+			TSubclassOf<UDamageType> DamageType = IsValid(WeaponData)? WeaponData->GetDamageType() : nullptr;
+			
+			UGameplayStatics::ApplyPointDamage(OtherActor, Damage, HitDirection, HitResult, CharacterOwner->GetInstigatorController(), WeaponOwner, DamageType);
 		}
 	}
 	

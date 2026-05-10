@@ -5,6 +5,7 @@
 
 #include "Character/GAM_PlayerCharacter.h"
 #include "Components/SphereComponent.h"
+#include "DataAssets/GAM_WeaponData.h"
 #include "GameFramework/Character.h"
 
 AGAM_Weapon::AGAM_Weapon()
@@ -19,8 +20,6 @@ AGAM_Weapon::AGAM_Weapon()
 	{
 		InteractCollision->SetupAttachment(WeaponMesh);
 	}
-	
-	AttachSocketName = NAME_None;
 }
 
 void AGAM_Weapon::Interact_Implementation(APawn* InstigatorPawn)
@@ -56,6 +55,11 @@ void AGAM_Weapon::StopAction()
 	}
 }
 
+void AGAM_Weapon::Release()
+{
+	Destroy();
+}
+
 void AGAM_Weapon::PickUp(ACharacter* Character)
 {
 	if (!IsValid(Character))
@@ -70,7 +74,7 @@ void AGAM_Weapon::PickUp(ACharacter* Character)
 	}
 	
 	// Attach to the character
-	AttachToComponent(SkeletalMeshComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale, AttachSocketName);
+	AttachToComponent(SkeletalMeshComponent, FAttachmentTransformRules::SnapToTargetNotIncludingScale, WeaponData->GetAttachSocketName());
 	
 	// Disable interactions
 	if (InteractCollision)

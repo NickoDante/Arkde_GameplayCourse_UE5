@@ -37,7 +37,7 @@ public:
 	
 	void StartWeaponAction();
 	void StopWeaponAction();
-	void SetCurrentWeapon(AGAM_Weapon* NewWeapon) { CurrentWeapon = NewWeapon; }
+	void SetCurrentWeapon(AGAM_Weapon* NewWeapon);
 	FTransform GetSocketTransform(const FName& SocketName) const;
 	
 protected:

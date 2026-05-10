@@ -5,6 +5,7 @@
 
 #include "Actors/Weapons/GAM_Weapon.h"
 #include "Camera/CameraComponent.h"
+#include "DataAssets/GAM_WeaponData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
 #include "Interfaces/GAM_Interactable.h"
@@ -55,7 +56,8 @@ void AGAM_PlayerCharacter::GetActorEyesViewPoint(FVector& OutLocation, FRotator&
 	{
 		if (CurrentWeapon)
 		{
-			const FName SocketName = CurrentWeapon->GetMuzzleSocketName();
+			UGAM_WeaponData* WeaponData = CurrentWeapon->GetWeaponData();
+			const FName SocketName = IsValid(WeaponData) ? WeaponData->GetMuzzleSocketName() : NAME_None;
 			FTransform SocketTransform = GetSocketTransform(SocketName);
 			
 			OutLocation = SocketTransform.GetLocation();
@@ -102,6 +104,16 @@ void AGAM_PlayerCharacter::StopWeaponAction()
 	{
 		CurrentWeapon->StopAction();
 	}
+}
+
+void AGAM_PlayerCharacter::SetCurrentWeapon(AGAM_Weapon* NewWeapon)
+{
+	if (IsValid(CurrentWeapon))
+	{
+		CurrentWeapon->Release();
+	}
+	
+	CurrentWeapon = NewWeapon;
 }
 
 FTransform AGAM_PlayerCharacter::GetSocketTransform(const FName& SocketName) const

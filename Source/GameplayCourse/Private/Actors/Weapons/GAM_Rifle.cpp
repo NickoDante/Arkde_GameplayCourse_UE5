@@ -4,6 +4,7 @@
 #include "Actors/Weapons/GAM_Rifle.h"
 
 #include "Character/GAM_PlayerCharacter.h"
+#include "DataAssets/GAM_WeaponData.h"
 #include "Kismet/GameplayStatics.h"
 #include "Kismet/KismetMathLibrary.h"
 #include "Particles/ParticleSystem.h"
@@ -32,7 +33,7 @@ void AGAM_Rifle::StartAction()
 	
 	// 3. Calculate the End Location
 	const FVector ShotDirection = EyeRotation.Vector();
-	const FVector EndLocation = StartLocation + (ShotDirection * TraceLength);
+	const FVector EndLocation = StartLocation + (ShotDirection * WeaponData->GetTraceLength());
 	
 	// 4. Set Query Params
 	FCollisionQueryParams QueryParams;
@@ -41,7 +42,7 @@ void AGAM_Rifle::StartAction()
 	QueryParams.bTraceComplex = true;
 	
 	// 5. Make the LineTrace
-	const FTransform MuzzleTransform = PlayerCharacterOwner->GetSocketTransform(MuzzleSocketName);
+	const FTransform MuzzleTransform = PlayerCharacterOwner->GetSocketTransform(WeaponData->GetMuzzleSocketName());
 	FVector ShotStart = MuzzleTransform.GetLocation();
 	FVector ShotEnd = EndLocation;
 	
@@ -60,7 +61,7 @@ void AGAM_Rifle::StartAction()
 		AActor* HitActor = HitResult.GetActor();
 		if (IsValid(HitActor))
 		{
-			UGameplayStatics::ApplyPointDamage(HitActor, Damage, ShotDirection, HitResult, PlayerCharacterOwner->GetInstigatorController(), this, DamageType);
+			UGameplayStatics::ApplyPointDamage(HitActor, WeaponData->GetDamage(), ShotDirection, HitResult, PlayerCharacterOwner->GetInstigatorController(), this, WeaponData->GetDamageType());
 		}
 	}
 	

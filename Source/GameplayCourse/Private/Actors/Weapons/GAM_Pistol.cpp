@@ -5,6 +5,7 @@
 
 #include "Actors/Weapons/GAM_PistolProjectile.h"
 #include "Character/GAM_PlayerCharacter.h"
+#include "DataAssets/GAM_WeaponData.h"
 #include "Kismet/KismetMathLibrary.h"
 
 AGAM_Pistol::AGAM_Pistol()
@@ -36,7 +37,7 @@ void AGAM_Pistol::StartAction()
 	
 	// 3. Calculate the End Location
 	const FVector ShotDirection = EyeRotation.Vector();
-	const FVector EndLocation = StartLocation + (ShotDirection * TraceLength);
+	const FVector EndLocation = StartLocation + (ShotDirection * WeaponData->GetTraceLength());
 	
 	// 4. Set Query Params
 	FCollisionQueryParams QueryParams;
@@ -45,7 +46,7 @@ void AGAM_Pistol::StartAction()
 	QueryParams.bTraceComplex = true;
 	
 	// 5. Make the LineTrace
-	const FTransform MuzzleTransform = PlayerCharacterOwner->GetSocketTransform(MuzzleSocketName);
+	const FTransform MuzzleTransform = PlayerCharacterOwner->GetSocketTransform(WeaponData->GetMuzzleSocketName());
 	FVector ShotStart = MuzzleTransform.GetLocation();
 	FVector ShotEnd = EndLocation;
 	

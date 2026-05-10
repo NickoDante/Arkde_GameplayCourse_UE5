@@ -6,6 +6,7 @@
 #include "Actors/Interactables/GAM_BaseInteractable.h"
 #include "GAM_Weapon.generated.h"
 
+class UGAM_WeaponData;
 class UStaticMeshComponent;
 class ACharacter;
 class AGAM_PlayerCharacter;
@@ -25,10 +26,9 @@ public:
 	virtual void StartAction();
 	virtual void StopAction();
 	
-	FName GetMuzzleSocketName() const { return MuzzleSocketName; }
+	UGAM_WeaponData* GetWeaponData() const { return WeaponData; }
 	
-	float GetDamage() const { return Damage; }
-	TSubclassOf<UDamageType> GetDamageType() const { return DamageType; }
+	void Release();
 	
 protected:
 
@@ -39,19 +39,7 @@ protected:
 	uint8 bDebug : 1;
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
-	FName AttachSocketName;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
-	float TraceLength;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
-	FName MuzzleSocketName;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
-	float Damage;
-	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Weapon")
-	TSubclassOf<UDamageType> DamageType;
+	TObjectPtr<UGAM_WeaponData> WeaponData;
 	
 	UPROPERTY()
 	TObjectPtr<AGAM_PlayerCharacter> PlayerCharacterOwner;
