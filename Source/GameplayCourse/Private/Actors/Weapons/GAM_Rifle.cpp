@@ -5,6 +5,8 @@
 
 #include "Character/GAM_PlayerCharacter.h"
 #include "Kismet/GameplayStatics.h"
+#include "Kismet/KismetMathLibrary.h"
+#include "Particles/ParticleSystem.h"
 
 AGAM_Rifle::AGAM_Rifle()
 {
@@ -69,5 +71,11 @@ void AGAM_Rifle::StartAction()
 		
 		// Debug from Weapon to point view
 		DrawDebugLine(GetWorld(), ShotStart, ShotEnd , FColor::White, false, 2.0f, 0, 0.5f);
+	}
+	
+	if (IsValid(FiringEffect))
+	{
+		const FRotator FiringRotation = UKismetMathLibrary::FindLookAtRotation(ShotStart, ShotEnd);
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), FiringEffect, ShotStart, FiringRotation);
 	}
 }

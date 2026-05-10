@@ -6,6 +6,8 @@
 #include "GAM_Weapon.h"
 #include "GAM_Rifle.generated.h"
 
+class UParticleSystem;
+
 UCLASS()
 class GAMEPLAYCOURSE_API AGAM_Rifle : public AGAM_Weapon
 {
@@ -16,4 +18,9 @@ public:
 	AGAM_Rifle();
 	
 	virtual void StartAction() override;
+	
+protected:
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Rifle")
+	TObjectPtr<UParticleSystem> FiringEffect;
 };
