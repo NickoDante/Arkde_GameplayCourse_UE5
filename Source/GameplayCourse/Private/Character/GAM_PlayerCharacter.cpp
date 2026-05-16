@@ -92,7 +92,7 @@ void AGAM_PlayerCharacter::StartInteract()
 
 void AGAM_PlayerCharacter::StartWeaponAction()
 {
-	if (IsValid(CurrentWeapon))
+	if (CanUseWeapon())
 	{
 		CurrentWeapon->StartAction();
 	}
@@ -100,7 +100,7 @@ void AGAM_PlayerCharacter::StartWeaponAction()
 
 void AGAM_PlayerCharacter::StopWeaponAction()
 {
-	if (IsValid(CurrentWeapon))
+	if (CanUseWeapon())
 	{
 		CurrentWeapon->StopAction();
 	}
@@ -121,8 +121,18 @@ FTransform AGAM_PlayerCharacter::GetSocketTransform(const FName& SocketName) con
 	return GetMesh()->GetSocketTransform(SocketName);
 }
 
+bool AGAM_PlayerCharacter::CanUseWeapon() const
+{
+	return IsValid(CurrentWeapon) && !bIsDoingMelee;
+}
+
 void AGAM_PlayerCharacter::StartMelee()
 {
+	if (!CanMelee())
+	{
+		return;
+	}
+	
 	bIsDoingMelee = true;
 	BP_StartMelee();
 }
@@ -131,5 +141,10 @@ void AGAM_PlayerCharacter::StopMelee()
 {
 	bIsDoingMelee = false;
 	BP_StopMelee();
+}
+
+bool AGAM_PlayerCharacter::CanMelee() const
+{
+	return !bIsDoingMelee;
 }
 

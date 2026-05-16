@@ -39,10 +39,12 @@ public:
 	void StopWeaponAction();
 	void SetCurrentWeapon(AGAM_Weapon* NewWeapon);
 	FTransform GetSocketTransform(const FName& SocketName) const;
+	bool CanUseWeapon() const;
 	
 	void StartMelee();
 	UFUNCTION(BlueprintCallable)
 	void StopMelee();
+	bool CanMelee() const;
 	
 protected:
 	
