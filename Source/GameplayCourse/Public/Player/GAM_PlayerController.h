@@ -44,8 +44,11 @@ private:
 	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs|Interact")
 	TObjectPtr<UInputAction> InteractAction;
 	
-	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs|Interact")
+	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs|Combat")
 	TObjectPtr<UInputAction> WeaponAction;
+	
+	UPROPERTY(EditDefaultsOnly, Category = "Arkde|Inputs|Combat")
+	TObjectPtr<UInputAction> MeleeAction;
 	
 	void Move(const FInputActionValue& Value);
 	
@@ -59,4 +62,6 @@ private:
 	
 	void StartWeaponAction();
 	void StopWeaponAction();
+	
+	void StartMelee();
 };

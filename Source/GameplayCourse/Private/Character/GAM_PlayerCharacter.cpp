@@ -121,3 +121,15 @@ FTransform AGAM_PlayerCharacter::GetSocketTransform(const FName& SocketName) con
 	return GetMesh()->GetSocketTransform(SocketName);
 }
 
+void AGAM_PlayerCharacter::StartMelee()
+{
+	bIsDoingMelee = true;
+	BP_StartMelee();
+}
+
+void AGAM_PlayerCharacter::StopMelee()
+{
+	bIsDoingMelee = false;
+	BP_StopMelee();
+}
+

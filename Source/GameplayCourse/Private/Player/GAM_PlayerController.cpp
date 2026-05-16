@@ -39,6 +39,8 @@ void AGAM_PlayerController::SetupInputComponent()
 	
 	EnhancedInputComponent->BindAction(WeaponAction, ETriggerEvent::Started, this, &ThisClass::StartWeaponAction);
 	EnhancedInputComponent->BindAction(WeaponAction, ETriggerEvent::Completed, this, &ThisClass::StopWeaponAction);
+	
+	EnhancedInputComponent->BindAction(MeleeAction, ETriggerEvent::Started, this, &ThisClass::StartMelee);
 }
 
 void AGAM_PlayerController::OnPossess(APawn* aPawn)
@@ -123,4 +125,14 @@ void AGAM_PlayerController::StopWeaponAction()
 	}
 	
 	PlayerCharacter->StopWeaponAction();
+}
+
+void AGAM_PlayerController::StartMelee()
+{
+	if (!IsValid(PlayerCharacter))
+	{
+		return;
+	}
+	
+	PlayerCharacter->StartMelee();
 }

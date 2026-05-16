@@ -40,6 +40,10 @@ public:
 	void SetCurrentWeapon(AGAM_Weapon* NewWeapon);
 	FTransform GetSocketTransform(const FName& SocketName) const;
 	
+	void StartMelee();
+	UFUNCTION(BlueprintCallable)
+	void StopMelee();
+	
 protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
@@ -59,9 +63,18 @@ protected:
 	UPROPERTY(BlueprintReadOnly, Category = "Arkde|Weapon")
 	TObjectPtr<AGAM_Weapon> CurrentWeapon;
 	
+	UPROPERTY(BlueprintReadOnly, Category = "Arkde|Melee")
+	uint8 bIsDoingMelee : 1;
+	
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_StartAim();
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_StopAim();
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_StartMelee();
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_StopMelee();
 };
