@@ -5,6 +5,7 @@
 
 #include "Actors/Weapons/GAM_Weapon.h"
 #include "Camera/CameraComponent.h"
+#include "Components/GAM_HealthComponent.h"
 #include "DataAssets/GAM_WeaponData.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "GameFramework/SpringArmComponent.h"
@@ -43,6 +44,8 @@ AGAM_PlayerCharacter::AGAM_PlayerCharacter()
 	FollowCamera = CreateDefaultSubobject<UCameraComponent>("FollowCamera");
 	FollowCamera->SetupAttachment(CameraBoom);
 	FollowCamera->bUsePawnControlRotation = false;
+	
+	HealthComponent = CreateDefaultSubobject<UGAM_HealthComponent>("HealthComponent");
 }
 
 void AGAM_PlayerCharacter::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const

@@ -6,6 +6,7 @@
 #include "GameFramework/Character.h"
 #include "GAM_PlayerCharacter.generated.h"
 
+class UGAM_HealthComponent;
 class AGAM_Weapon;
 class USpringArmComponent;
 class UCameraComponent;
@@ -53,6 +54,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UCameraComponent> FollowCamera;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UGAM_HealthComponent> HealthComponent;
 	
 	UPROPERTY(BlueprintReadOnly, Category = "Arkde|Aim")
 	uint8 bIsAiming : 1;
