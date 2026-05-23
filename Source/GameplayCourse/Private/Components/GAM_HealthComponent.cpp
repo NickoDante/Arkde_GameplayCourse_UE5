@@ -25,7 +25,7 @@ void UGAM_HealthComponent::BeginPlay()
 void UGAM_HealthComponent::TakingDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
 	class AController* InstigatedBy, AActor* DamageCauser)
 {
-	if (Damage == 0.0)
+	if (Damage == 0.0 || bIsDead)
 	{
 		return;
 	}

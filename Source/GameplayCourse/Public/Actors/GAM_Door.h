@@ -42,14 +42,15 @@ protected:
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_PlayDoorSound(const bool bCanOpen);
+	
+	UFUNCTION(BlueprintCallable)
+	void OpenImmediately();
 
 public:
 	// Called every frame
 	virtual void Tick(float DeltaTime) override;
 
 private:
-	
-	void OpenImmediately();
 	
 	void StartOpen();
 	
