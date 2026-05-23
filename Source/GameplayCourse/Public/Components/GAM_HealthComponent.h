@@ -23,6 +23,9 @@ public:
 	
 	UPROPERTY(BlueprintAssignable, BlueprintCallable)
 	FGAM_OnHealthChangedSignature OnHealthChangedDelegate;
+	
+	bool IsAlive() const { return !bIsDead; }
+	bool IsDead() const { return bIsDead; }
 
 protected:
 

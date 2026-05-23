@@ -5,6 +5,7 @@
 
 #include "Actors/Weapons/GAM_Weapon.h"
 #include "Camera/CameraComponent.h"
+#include "Components/CapsuleComponent.h"
 #include "Components/GAM_HealthComponent.h"
 #include "DataAssets/GAM_WeaponData.h"
 #include "GameFramework/CharacterMovementComponent.h"
@@ -137,7 +138,8 @@ FTransform AGAM_PlayerCharacter::GetSocketTransform(const FName& SocketName) con
 
 bool AGAM_PlayerCharacter::CanUseWeapon() const
 {
-	return IsValid(CurrentWeapon) && !bIsDoingMelee;
+	const bool bIsAlive = IsValid(HealthComponent) ? HealthComponent->IsAlive() : false;
+	return IsValid(CurrentWeapon) && !bIsDoingMelee && bIsAlive;
 }
 
 void AGAM_PlayerCharacter::StartMelee()
@@ -159,7 +161,8 @@ void AGAM_PlayerCharacter::StopMelee()
 
 bool AGAM_PlayerCharacter::CanMelee() const
 {
-	return !bIsDoingMelee;
+	const bool bIsAlive = IsValid(HealthComponent) ? HealthComponent->IsAlive() : false;
+	return !bIsDoingMelee && bIsAlive;
 }
 
 void AGAM_PlayerCharacter::OnHealthChanged(float Health, float MaxHealth)
@@ -169,6 +172,12 @@ void AGAM_PlayerCharacter::OnHealthChanged(float Health, float MaxHealth)
 
 void AGAM_PlayerCharacter::OnDead()
 {
+	GetMovementComponent()->StopMovementImmediately();
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	
+	DetachFromControllerPendingDestroy();
+	SetLifeSpan(5.0f);
+	
 	BP_OnDead();
 }
 
