@@ -48,6 +48,17 @@ AGAM_PlayerCharacter::AGAM_PlayerCharacter()
 	HealthComponent = CreateDefaultSubobject<UGAM_HealthComponent>("HealthComponent");
 }
 
+void AGAM_PlayerCharacter::BeginPlay()
+{
+	Super::BeginPlay();
+	
+	if (IsValid(HealthComponent))
+	{
+		HealthComponent->OnHealthChangedDelegate.AddUniqueDynamic(this, &ThisClass::OnHealthChanged);
+		HealthComponent->OnDeadDelegate.AddUniqueDynamic(this, &ThisClass::OnDead);
+	}
+}
+
 void AGAM_PlayerCharacter::GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const
 {
 	if (bIsAiming)
@@ -149,5 +160,15 @@ void AGAM_PlayerCharacter::StopMelee()
 bool AGAM_PlayerCharacter::CanMelee() const
 {
 	return !bIsDoingMelee;
+}
+
+void AGAM_PlayerCharacter::OnHealthChanged(float Health, float MaxHealth)
+{
+	BP_OnHealthChanged(Health, MaxHealth);
+}
+
+void AGAM_PlayerCharacter::OnDead()
+{
+	BP_OnDead();
 }
 

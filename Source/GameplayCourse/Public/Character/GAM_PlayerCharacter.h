@@ -20,6 +20,8 @@ public:
 	
 	AGAM_PlayerCharacter();
 	
+	virtual void BeginPlay() override;
+	
 	virtual void GetActorEyesViewPoint(FVector& OutLocation, FRotator& OutRotation) const override;
 	
 	void StartAim();
@@ -83,4 +85,16 @@ protected:
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_StopMelee();
+	
+	UFUNCTION()
+	void OnHealthChanged(float Health, float MaxHealth);
+	
+	UFUNCTION()
+	void OnDead();
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnHealthChanged(float Health, float MaxHealth);
+	
+	UFUNCTION(BlueprintImplementableEvent)
+	void BP_OnDead();
 };
