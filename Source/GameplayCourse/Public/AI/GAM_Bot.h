@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "GAM_Bot.generated.h"
 
+class AGAM_PlayerCharacter;
 class UStaticMeshComponent;
 
 UCLASS()
@@ -22,9 +23,30 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> MeshComponent;
 	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot")
+	uint8 bDebug : 1;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
+	float MinDistanceToTarget;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
+	float ForceMagnitude;
+	
+	UPROPERTY(BlueprintReadOnly)
+	FVector TargetPoint;
+	
+	UPROPERTY(BlueprintReadOnly)
+	TObjectPtr<AGAM_PlayerCharacter> PlayerReference;
+	
 	virtual void BeginPlay() override;
 
 public:
 	
 	virtual void Tick(float DeltaTime) override;
+	
+private:
+	
+	FVector GetNextPathPoint() const;
+	
+	void MoveToTargetPoint();
 };
