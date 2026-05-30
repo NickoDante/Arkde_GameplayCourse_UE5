@@ -6,6 +6,8 @@
 #include "Interactables/GAM_BaseInteractable.h"
 #include "GAM_Door.generated.h"
 
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FGAM_OnOpenedSignature);
+
 class UStaticMeshComponent;
 
 UCLASS()
@@ -39,6 +41,9 @@ protected:
 	
 	UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = "Arkde|Door")
 	FName ID;
+	
+	UPROPERTY(BlueprintAssignable)
+	FGAM_OnOpenedSignature OnOpenedDelegate;
 	
 	UFUNCTION(BlueprintImplementableEvent)
 	void BP_PlayDoorSound(const bool bCanOpen);

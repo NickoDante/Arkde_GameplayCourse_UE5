@@ -85,6 +85,7 @@ void AGAM_Door::OpenImmediately()
 	}
 	
 	bIsFullyOpened = true;
+	OnOpenedDelegate.Broadcast();
 }
 
 void AGAM_Door::StartOpen()
@@ -96,5 +97,6 @@ void AGAM_Door::StopOpen()
 {
 	bIsOpening = false;
 	bIsFullyOpened = true;
+	OnOpenedDelegate.Broadcast();
 }
 
