@@ -9,6 +9,7 @@ AGAM_Bot::AGAM_Bot()
 	
 	MeshComponent = CreateDefaultSubobject<UStaticMeshComponent>("MeshComponent");
 	MeshComponent->SetSimulatePhysics(true);
+	MeshComponent->SetCanEverAffectNavigation(false);
 	SetRootComponent(MeshComponent);
 }
 
