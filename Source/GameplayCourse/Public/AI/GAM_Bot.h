@@ -36,6 +36,12 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
 	float ForceMagnitude;
 	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
+	float ExplosionDamage = 100.f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
+	float ExplosionRadius = 300.f;
+	
 	UPROPERTY(BlueprintReadOnly)
 	FVector TargetPoint;
 	
@@ -44,6 +50,9 @@ protected:
 	
 	UPROPERTY()
 	TObjectPtr<UMaterialInstanceDynamic> BotMaterial;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Effects")
+	TObjectPtr<UParticleSystem> ExplosionEffect;
 	
 	virtual void BeginPlay() override;
 	

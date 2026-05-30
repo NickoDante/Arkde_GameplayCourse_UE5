@@ -8,6 +8,7 @@
 #include "Character/GAM_PlayerCharacter.h"
 #include "Components/GAM_HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
+#include "Particles/ParticleSystem.h"
 
 AGAM_Bot::AGAM_Bot()
 {
@@ -117,6 +118,39 @@ void AGAM_Bot::MoveToTargetPoint()
 
 void AGAM_Bot::Explode()
 {
+	if (IsValid(ExplosionEffect))
+	{
+		UGameplayStatics::SpawnEmitterAtLocation(GetWorld(), ExplosionEffect, GetActorLocation());
+	}
+	
+	TArray<AActor*> ActorsToIgnore;
+	ActorsToIgnore.Add(this);
+	
+	UGameplayStatics::ApplyRadialDamage(
+		GetWorld(), 
+		ExplosionDamage, 
+		GetActorLocation(), 
+		ExplosionRadius, 
+		nullptr, 
+		ActorsToIgnore, 
+		this, 
+		GetInstigatorController(), 
+		true);
+	
+	if (bDebug)
+	{
+		DrawDebugSphere(
+			GetWorld(),
+			GetActorLocation(),
+			ExplosionRadius,
+			12,
+			FColor::Red,
+			false,
+			3.f,
+			0,
+			2.f);
+	}
+	
 	Destroy();
 }
 
