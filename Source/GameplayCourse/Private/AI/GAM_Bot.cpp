@@ -6,6 +6,7 @@
 #include "NavigationPath.h"
 #include "NavigationSystem.h"
 #include "Character/GAM_PlayerCharacter.h"
+#include "Components/GAM_HealthComponent.h"
 #include "Kismet/GameplayStatics.h"
 
 AGAM_Bot::AGAM_Bot()
@@ -16,6 +17,8 @@ AGAM_Bot::AGAM_Bot()
 	MeshComponent->SetSimulatePhysics(true);
 	MeshComponent->SetCanEverAffectNavigation(false);
 	SetRootComponent(MeshComponent);
+	
+	HealthComponent = CreateDefaultSubobject<UGAM_HealthComponent>("HealthComponent");
 	
 	bDebug = true;
 	MinDistanceToTarget = 150.f;
@@ -29,7 +32,28 @@ void AGAM_Bot::BeginPlay()
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
 	PlayerReference = Cast<AGAM_PlayerCharacter>(PlayerPawn);
 	
+	if (IsValid(HealthComponent))
+	{
+		HealthComponent->OnHealthChangedDelegate.AddUniqueDynamic(this, &AGAM_Bot::OnTakingDamage);
+		HealthComponent->OnDeadDelegate.AddUniqueDynamic(this, &AGAM_Bot::OnDead);
+	}
+	
+	BotMaterial = MeshComponent->CreateAndSetMaterialInstanceDynamicFromMaterial(0, MeshComponent->GetMaterial(0));
+	
 	TargetPoint = GetNextPathPoint();
+}
+
+void AGAM_Bot::OnTakingDamage(float Health, float MaxHealth)
+{
+	if (IsValid(BotMaterial))
+	{
+		BotMaterial->SetScalarParameterValue("Pulse", GetWorld()->TimeSeconds);
+	}
+}
+
+void AGAM_Bot::OnDead()
+{
+	Explode();
 }
 
 void AGAM_Bot::Tick(float DeltaTime)
@@ -89,6 +113,11 @@ void AGAM_Bot::MoveToTargetPoint()
 			0,
 			1.f);
 	}
+}
+
+void AGAM_Bot::Explode()
+{
+	Destroy();
 }
 
 

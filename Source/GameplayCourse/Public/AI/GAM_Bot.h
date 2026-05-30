@@ -6,6 +6,7 @@
 #include "GameFramework/Pawn.h"
 #include "GAM_Bot.generated.h"
 
+class UGAM_HealthComponent;
 class AGAM_PlayerCharacter;
 class UStaticMeshComponent;
 
@@ -23,6 +24,9 @@ protected:
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<UStaticMeshComponent> MeshComponent;
 	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UGAM_HealthComponent> HealthComponent;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot")
 	uint8 bDebug : 1;
 	
@@ -38,7 +42,16 @@ protected:
 	UPROPERTY(BlueprintReadOnly)
 	TObjectPtr<AGAM_PlayerCharacter> PlayerReference;
 	
+	UPROPERTY()
+	TObjectPtr<UMaterialInstanceDynamic> BotMaterial;
+	
 	virtual void BeginPlay() override;
+	
+	UFUNCTION()
+	void OnTakingDamage(float Health, float MaxHealth);
+	
+	UFUNCTION()
+	void OnDead();
 
 public:
 	
@@ -49,4 +62,6 @@ private:
 	FVector GetNextPathPoint() const;
 	
 	void MoveToTargetPoint();
+	
+	void Explode();
 };
