@@ -30,6 +30,8 @@ protected:
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot")
 	uint8 bDebug : 1;
 	
+	uint8 bIsCountingToDestroy:1;
+	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
 	float MinDistanceToTarget;
 	
@@ -41,6 +43,15 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
 	float ExplosionRadius = 300.f;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
+	float MinPlayerRadius {300.f};
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
+	float CountingRate {0.25f};
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
+	float SelfDamage {10.f};
 	
 	UPROPERTY(BlueprintReadOnly)
 	FVector TargetPoint;
@@ -73,4 +84,10 @@ private:
 	void MoveToTargetPoint();
 	
 	void Explode();
+	
+	void CheckCountDownToDestroy();
+	
+	void StartCountDownToDestroy();
+	
+	void MakeSelfDamage();
 };

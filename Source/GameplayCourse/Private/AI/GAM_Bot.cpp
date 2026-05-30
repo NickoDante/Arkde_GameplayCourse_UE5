@@ -62,6 +62,7 @@ void AGAM_Bot::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 	
 	MoveToTargetPoint();
+	CheckCountDownToDestroy();
 }
 
 FVector AGAM_Bot::GetNextPathPoint() const
@@ -152,6 +153,37 @@ void AGAM_Bot::Explode()
 	}
 	
 	Destroy();
+}
+
+void AGAM_Bot::CheckCountDownToDestroy()
+{
+	if (!IsValid(PlayerReference) || bIsCountingToDestroy)
+	{
+		return;
+	}
+	
+	const FVector BotLocation = GetActorLocation();
+	const FVector PlayerLocation = PlayerReference->GetActorLocation();
+	const FVector ToPlayer = PlayerLocation - BotLocation;
+	const float Distance = ToPlayer.Size();
+	
+	if (Distance <= MinPlayerRadius)
+	{
+		StartCountDownToDestroy();
+	}
+}
+
+void AGAM_Bot::StartCountDownToDestroy()
+{
+	bIsCountingToDestroy = true;
+	
+	FTimerHandle CountingTimerHandle;
+	GetWorld()->GetTimerManager().SetTimer(CountingTimerHandle, this, &ThisClass::MakeSelfDamage, CountingRate, true);
+}
+
+void AGAM_Bot::MakeSelfDamage()
+{
+	UGameplayStatics::ApplyDamage(this, SelfDamage, GetInstigatorController(), nullptr, nullptr);
 }
 
 
