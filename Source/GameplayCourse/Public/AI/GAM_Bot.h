@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "GAM_Definitions.h"
 #include "GameFramework/Pawn.h"
 #include "GAM_Bot.generated.h"
 
@@ -32,26 +33,19 @@ protected:
 	
 	uint8 bIsCountingToDestroy:1;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
 	float MinDistanceToTarget;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
 	float ForceMagnitude;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
-	float ExplosionDamage = 100.f;
+	float ExplosionDamage;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
-	float ExplosionRadius = 300.f;
+	float ExplosionRadius;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
-	float MinPlayerRadius {300.f};
+	float MinPlayerRadius;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
-	float CountingRate {0.25f};
+	float CountingRate;
 	
-	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
-	float SelfDamage {10.f};
+	float SelfDamage;
 	
 	UPROPERTY(BlueprintReadOnly)
 	FVector TargetPoint;
@@ -64,6 +58,12 @@ protected:
 	
 	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Effects")
 	TObjectPtr<UParticleSystem> ExplosionEffect;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
+	TObjectPtr<UDataTable> BotDataTable;
+	
+	UPROPERTY(EditDefaultsOnly, BlueprintReadOnly, Category = "Arkde|Bot|Properties")
+	EGAM_Difficulty BotDifficulty;
 	
 	virtual void BeginPlay() override;
 	
@@ -78,6 +78,8 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	
 private:
+	
+	void InitProperties();
 	
 	FVector GetNextPathPoint() const;
 	

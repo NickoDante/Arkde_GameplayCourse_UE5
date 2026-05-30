@@ -3,10 +3,12 @@
 
 #include "AI/GAM_Bot.h"
 
+#include "GAM_Definitions.h"
 #include "NavigationPath.h"
 #include "NavigationSystem.h"
 #include "Character/GAM_PlayerCharacter.h"
 #include "Components/GAM_HealthComponent.h"
+#include "DataTables/GAM_BotDataTable.h"
 #include "Kismet/GameplayStatics.h"
 #include "Particles/ParticleSystem.h"
 
@@ -24,11 +26,18 @@ AGAM_Bot::AGAM_Bot()
 	bDebug = true;
 	MinDistanceToTarget = 150.f;
 	ForceMagnitude = 2000.f;
+	ExplosionDamage = 100.f;
+	ExplosionRadius = 300.f;
+	MinPlayerRadius = 300.f;
+	CountingRate = 0.25f;
+	SelfDamage = 10.f;
 }
 
 void AGAM_Bot::BeginPlay()
 {
 	Super::BeginPlay();
+	
+	InitProperties();
 	
 	APawn* PlayerPawn = UGameplayStatics::GetPlayerPawn(this, 0);
 	PlayerReference = Cast<AGAM_PlayerCharacter>(PlayerPawn);
@@ -42,6 +51,32 @@ void AGAM_Bot::BeginPlay()
 	BotMaterial = MeshComponent->CreateAndSetMaterialInstanceDynamicFromMaterial(0, MeshComponent->GetMaterial(0));
 	
 	TargetPoint = GetNextPathPoint();
+}
+
+void AGAM_Bot::InitProperties()
+{
+	if (BotDataTable)
+	{
+		const FName RowName = GetDifficultyAsName(BotDifficulty);
+		FString ContextString;
+		
+		FGAM_BotData* Data = BotDataTable->FindRow<FGAM_BotData>(RowName, ContextString);
+		if (Data)
+		{
+			// Movement
+			MinDistanceToTarget = Data->MinDistanceToTarget;
+			ForceMagnitude = Data->ForceMagnitude;
+			
+			// Explosion
+			ExplosionDamage = Data->ExplosionDamage;
+			ExplosionRadius = Data->ExplosionRadius;
+			MinPlayerRadius = Data->MinPlayerRadius;
+			
+			//Self Destruction
+			CountingRate = Data->CountingRate;
+			SelfDamage = Data->SelfDamage;
+		}
+	}
 }
 
 void AGAM_Bot::OnTakingDamage(float Health, float MaxHealth)
