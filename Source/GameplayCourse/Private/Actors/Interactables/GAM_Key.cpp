@@ -5,6 +5,7 @@
 #include "Character/GAM_PlayerCharacter.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
+#include "Components/WidgetComponent.h"
 
 AGAM_Key::AGAM_Key()
 {
@@ -14,6 +15,11 @@ AGAM_Key::AGAM_Key()
 	if (InteractCollision)
 	{
 		InteractCollision->SetupAttachment(KeyMesh);
+	}
+	
+	if (IsValid(InteractWidgetComponent))
+	{
+		InteractWidgetComponent->SetupAttachment(KeyMesh);
 	}
 	
 	ID = FName("Key ID");

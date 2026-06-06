@@ -4,6 +4,7 @@
 
 #include "Character/GAM_PlayerCharacter.h"
 #include "Components/SphereComponent.h"
+#include "Components/WidgetComponent.h"
 
 AGAM_BaseInteractable::AGAM_BaseInteractable()
 {
@@ -12,6 +13,8 @@ AGAM_BaseInteractable::AGAM_BaseInteractable()
 	InteractCollision = CreateDefaultSubobject<USphereComponent>("InteractCollision");
 	InteractCollision->SetCollisionResponseToAllChannels(ECR_Ignore);
 	InteractCollision->SetCollisionResponseToChannel(ECC_Pawn, ECR_Overlap);
+	
+	InteractWidgetComponent = CreateDefaultSubobject<UWidgetComponent>("InteractWidgetComponent");
 }
 
 void AGAM_BaseInteractable::Interact_Implementation(APawn* InstigatorPawn)

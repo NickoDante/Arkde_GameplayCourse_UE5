@@ -8,6 +8,7 @@
 #include "GAM_BaseInteractable.generated.h"
 
 class USphereComponent;
+class UWidgetComponent;
 
 UCLASS()
 class GAMEPLAYCOURSE_API AGAM_BaseInteractable : public AActor, public IGAM_Interactable
@@ -26,6 +27,9 @@ protected:
 	
 	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
 	TObjectPtr<USphereComponent> InteractCollision;
+	
+	UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components")
+	TObjectPtr<UWidgetComponent> InteractWidgetComponent;
 	
 	UFUNCTION()
 	void OnOverlapStarted(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult);

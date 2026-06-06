@@ -5,6 +5,7 @@
 #include "Character/GAM_PlayerCharacter.h"
 #include "Components/SphereComponent.h"
 #include "Components/StaticMeshComponent.h"
+#include "Components/WidgetComponent.h"
 
 AGAM_Door::AGAM_Door()
 {
@@ -19,6 +20,11 @@ AGAM_Door::AGAM_Door()
 	if (IsValid(InteractCollision))
 	{
 		InteractCollision->SetupAttachment(DoorFrame);
+	}
+	
+	if (IsValid(InteractWidgetComponent))
+	{
+		InteractWidgetComponent->SetupAttachment(DoorFrame);
 	}
 	
 	bHasOpenImmediately = false;

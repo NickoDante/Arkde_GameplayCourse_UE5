@@ -5,6 +5,7 @@
 
 #include "Character/GAM_PlayerCharacter.h"
 #include "Components/SphereComponent.h"
+#include "Components/WidgetComponent.h"
 #include "DataAssets/GAM_WeaponData.h"
 #include "GameFramework/Character.h"
 
@@ -19,6 +20,11 @@ AGAM_Weapon::AGAM_Weapon()
 	if (InteractCollision)
 	{
 		InteractCollision->SetupAttachment(WeaponMesh);
+	}
+	
+	if (IsValid(InteractWidgetComponent))
+	{
+		InteractWidgetComponent->SetupAttachment(WeaponMesh);
 	}
 }
 
