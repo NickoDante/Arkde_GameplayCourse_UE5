@@ -97,6 +97,8 @@ void AGAM_Weapon::PickUp(ACharacter* Character)
 	
 	SetOwner(Character);
 	
+	HideMessage();
+	
 	BP_PickUp(Character);
 }
 

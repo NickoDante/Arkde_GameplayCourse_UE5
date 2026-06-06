@@ -61,4 +61,6 @@ private:
 	
 	void StopOpen();
 	
+	void DisableInteraction();
+	
 };

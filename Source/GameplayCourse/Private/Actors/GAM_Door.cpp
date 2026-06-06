@@ -92,11 +92,13 @@ void AGAM_Door::OpenImmediately()
 	
 	bIsFullyOpened = true;
 	OnOpenedDelegate.Broadcast();
+	DisableInteraction();
 }
 
 void AGAM_Door::StartOpen()
 {
 	bIsOpening = true;
+	DisableInteraction();
 }
 
 void AGAM_Door::StopOpen()
@@ -104,5 +106,14 @@ void AGAM_Door::StopOpen()
 	bIsOpening = false;
 	bIsFullyOpened = true;
 	OnOpenedDelegate.Broadcast();
+}
+
+void AGAM_Door::DisableInteraction()
+{
+	HideMessage();
+	if (IsValid(InteractCollision))
+	{
+		InteractCollision->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	}
 }
 

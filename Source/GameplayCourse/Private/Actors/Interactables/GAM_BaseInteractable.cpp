@@ -37,6 +37,8 @@ void AGAM_BaseInteractable::BeginPlay()
 		InteractCollision->OnComponentBeginOverlap.AddUniqueDynamic(this, &ThisClass::OnOverlapStarted);
 		InteractCollision->OnComponentEndOverlap.AddUniqueDynamic(this, &ThisClass::OnOverlapEnded);
 	}
+	
+	HideMessage();
 }
 
 void AGAM_BaseInteractable::OnOverlapStarted(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -47,6 +49,8 @@ void AGAM_BaseInteractable::OnOverlapStarted(UPrimitiveComponent* OverlappedComp
 	{
 		PlayerCharacter->SetCurrentInteractable(this);
 	}
+	
+	ShowMessage();
 }
 
 void AGAM_BaseInteractable::OnOverlapEnded(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor,
@@ -56,6 +60,26 @@ void AGAM_BaseInteractable::OnOverlapEnded(UPrimitiveComponent* OverlappedCompon
 	if (IsValid(PlayerCharacter))
 	{
 		PlayerCharacter->SetCurrentInteractable(nullptr);
+	}
+	
+	HideMessage();
+}
+
+void AGAM_BaseInteractable::ShowMessage()
+{
+	SetInteractWidgetVisibility(true);
+}
+
+void AGAM_BaseInteractable::HideMessage()
+{
+	SetInteractWidgetVisibility(false);
+}
+
+void AGAM_BaseInteractable::SetInteractWidgetVisibility(const bool bIsVisible)
+{
+	if (IsValid(InteractWidgetComponent))
+	{
+		InteractWidgetComponent->SetVisibility(bIsVisible);
 	}
 }
 

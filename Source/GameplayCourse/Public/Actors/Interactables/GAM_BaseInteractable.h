@@ -36,4 +36,10 @@ protected:
 	
 	UFUNCTION()
 	void OnOverlapEnded(UPrimitiveComponent* OverlappedComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, int32 OtherBodyIndex);
+
+	void ShowMessage();
+	
+	void HideMessage();
+	
+	void SetInteractWidgetVisibility(const bool bIsVisible);
 };
