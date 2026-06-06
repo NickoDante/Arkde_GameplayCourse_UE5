@@ -13,13 +13,19 @@ void UGAM_HealthComponent::BeginPlay()
 {
 	Super::BeginPlay();
 	
-	Health = MaxHealth;
-	
 	AActor* MyOwner = GetOwner();
 	if (IsValid(MyOwner))
 	{
 		MyOwner->OnTakeAnyDamage.AddUniqueDynamic(this, &ThisClass::TakingDamage);
 	}
+	
+	FTimerHandle InitialHealthTimerHandle;
+	FTimerDelegate HealthDelegate = FTimerDelegate::CreateWeakLambda(this, [this]()
+	{
+		SetHealthValue(MaxHealth);
+	});
+	
+	GetWorld()->GetTimerManager().SetTimer(InitialHealthTimerHandle, HealthDelegate, 0.2f, false);
 }
 
 void UGAM_HealthComponent::TakingDamage(AActor* DamagedActor, float Damage, const class UDamageType* DamageType,
@@ -31,9 +37,8 @@ void UGAM_HealthComponent::TakingDamage(AActor* DamagedActor, float Damage, cons
 	}
 	
 	const float NewHealth = Health - Damage;
-	Health = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
-	
-	OnHealthChangedDelegate.Broadcast(Health, MaxHealth);
+	const float NewValue = FMath::Clamp(NewHealth, 0.0f, MaxHealth);
+	SetHealthValue(NewValue);
 	
 	if (bDebug && GEngine)
 	{
@@ -49,6 +54,12 @@ void UGAM_HealthComponent::TakingDamage(AActor* DamagedActor, float Damage, cons
 		bIsDead = true;
 		OnDeadDelegate.Broadcast();
 	}
+}
+
+void UGAM_HealthComponent::SetHealthValue(const float NewValue)
+{
+	Health = NewValue;
+	OnHealthChangedDelegate.Broadcast(Health, MaxHealth);
 }
 
 
